@@ -9,140 +9,79 @@
 import UIKit
 
 protocol SchedulerDelegate: class {
-    func schedulerDidPause()
-    func schedulerDidUnpause()
-    func schedulerDidStart()
-    func schedulerDidStop()
+  func schedulerDidPause()
+  func schedulerDidUnpause()
+  func schedulerDidStart()
+  func schedulerDidStop()
 }
 
 class Scheduler {
 
-    weak var delegate: SchedulerDelegate?
+  static let sharedInstance = Scheduler()
 
-    private let userDefaults = NSUserDefaults.standardUserDefaults()
-    private let settings = SettingsManager.sharedManager
-    private let pomodoro = Pomodoro.sharedInstance
+  fileprivate init() { }
 
-    // Interval for rescheduling timers
-    var pausedTime: Double? {
-        get {
-            return userDefaults.objectForKey("PausedTime") as? Double
-        }
-        set {
-            if let value = newValue where value != 0 {
-                userDefaults.setDouble(value, forKey: "PausedTime")
-            } else {
-                userDefaults.removeObjectForKey("PausedTime")
-            }
-        }
-    }
+  fileprivate let userDefaults = UserDefaults.standard
+  fileprivate let settings = Settings.sharedInstance
+  fileprivate let pomodoro = Pomodoro.sharedInstance
 
-    // Date representing fire date of scheduled notification
-    var fireDate: NSDate? {
-        get {
-            return userDefaults.objectForKey("FireDate") as? NSDate
-        }
-        set {
-            if let value = newValue {
-                userDefaults.setObject(value, forKey: "FireDate")
-            } else {
-                userDefaults.removeObjectForKey("FireDate")
-            }
-        }
-    }
+  // MARK: - Helpers
 
-    // Returns paused if paused time present
-    var paused: Bool {
-        return pausedTime != nil
-    }
+  fileprivate var firstScheduledNotification: UILocalNotification? {
+    return UIApplication.shared.scheduledLocalNotifications?.first
+  }
 
-    func start() {
-        switch pomodoro.state {
-        case .Default: schedulePomodoro()
-        case .ShortBreak: scheduleShortBreak()
-        case .LongBreak: scheduleLongBreak()
-        }
+  func suspend() {
+    UIApplication.shared.cancelAllLocalNotifications()
+    pomodoro.fireDate = nil
 
-        delegate?.schedulerDidStart()
-        print("Scheduler started")
-    }
+    print("Notification canceled")
+  }
 
-    func pause(interval: NSTimeInterval) {
-        pausedTime = interval
-        cancelNotification()
+  func schedulePomodoro(_ interval: Int? = nil) {
+    let interval = interval ?? settings.pomodoroLength
 
-        delegate?.schedulerDidPause()
-        print("Scheduler paused")
-    }
+    scheduleNotification(TimeInterval(interval),
+                         title: "Pomodoro finished",
+                         body: "Time to take a break!")
 
-    func unpause() {
-        guard let interval = pausedTime else { return }
+    print("Pomodoro scheduled")
+  }
 
-        switch pomodoro.state {
-        case .Default: schedulePomodoro(interval)
-        case .ShortBreak: scheduleShortBreak(interval)
-        case .LongBreak: scheduleLongBreak(interval)
-        }
+  func scheduleShortBreak(_ interval: Int? = nil) {
+    let interval = interval ?? settings.shortBreakLength
 
-        pausedTime = nil
+    scheduleNotification(TimeInterval(interval),
+                         title: "Break finished",
+                         body: "Time to get back to work!")
 
-        delegate?.schedulerDidUnpause()
-        print("Scheduler unpaused")
-    }
+    print("Short break scheduled")
+  }
 
-    func stop() {
-        pausedTime = nil
-        cancelNotification()
+  func scheduleLongBreak(_ interval: Int? = nil) {
+    let interval = interval ?? settings.longBreakLength
 
-        delegate?.schedulerDidStop()
-        print("Scheduler stopped")
-    }
+    scheduleNotification(TimeInterval(interval),
+                         title: "Long break is over",
+                         body: "Time to get back to work!")
 
-    // MARK: - Helpers
+    print("Long break scheduled")
+  }
 
-    private var firstScheduledNotification: UILocalNotification? {
-        return UIApplication.sharedApplication().scheduledLocalNotifications?.first
-    }
+  fileprivate func scheduleNotification(_ interval: TimeInterval, title: String, body: String) {
+    let notification = UILocalNotification()
 
-    private func cancelNotification() {
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        fireDate = nil
-        print("Notification canceled")
-    }
+    notification.fireDate = Date(timeIntervalSinceNow: interval)
+    notification.alertTitle = title
+    notification.alertBody = body
+    notification.applicationIconBadgeNumber = 1
+    notification.soundName = UILocalNotificationDefaultSoundName
 
-    private func schedulePomodoro(interval: NSTimeInterval? = nil) {
-        let interval = interval ?? NSTimeInterval(settings.pomodoroLength)
-        scheduleNotification(interval,
-            title: "Pomodoro finished", body: "Time to take a break!")
-        print("Pomodoro scheduled")
-    }
+    UIApplication.shared.scheduleLocalNotification(notification)
 
-    private func scheduleShortBreak(interval: NSTimeInterval? = nil) {
-        let interval = interval ?? NSTimeInterval(settings.shortBreakLength)
-        scheduleNotification(interval,
-            title: "Break finished", body: "Time to get back to work!")
-        print("Short break scheduled")
-    }
+    pomodoro.fireDate = notification.fireDate
 
-    private func scheduleLongBreak(interval: NSTimeInterval? = nil) {
-        let interval = interval ?? NSTimeInterval(settings.longBreakLength)
-        scheduleNotification(interval,
-            title: "Long break is over", body: "Time to get back to work!")
-        print("Long break scheduled")
-    }
-
-    private func scheduleNotification(interval: NSTimeInterval, title: String, body: String) {
-        let notification = UILocalNotification()
-        notification.fireDate = NSDate(timeIntervalSinceNow: interval)
-        notification.alertTitle = title
-        notification.alertBody = body
-        notification.applicationIconBadgeNumber = 1
-        notification.soundName = UILocalNotificationDefaultSoundName
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-
-        fireDate = notification.fireDate
-
-        print("Pomodoro notification scheduled for \(notification.fireDate!)")
-    }
+    print("Pomodoro notification scheduled for \(notification.fireDate!)")
+  }
 
 }

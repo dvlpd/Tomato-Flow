@@ -11,37 +11,59 @@ import Foundation
 // Pomodoro is a singleton object that handles pomodoros and breaks logic
 class Pomodoro {
 
-    static let sharedInstance = Pomodoro()
+  static let sharedInstance = Pomodoro()
 
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let settings = SettingsManager.sharedManager
+  let userDefaults = UserDefaults.standard
+  let settings = Settings.sharedInstance
 
-    var state: State = .Default
+  fileprivate init() {}
 
-    private init() {}
-
-    var pomodorosCompleted: Int {
-        get {
-            return userDefaults.integerForKey(currentDateKey)
-        }
-        set {
-            userDefaults.setInteger(newValue, forKey: currentDateKey)
-        }
+  var pomodorosCount: Int {
+    get {
+      return userDefaults.integer(forKey: currentDateKey)
     }
-
-    func completePomodoro() {
-        pomodorosCompleted += 1
-        state = (pomodorosCompleted % 4 == 0 ? .LongBreak : .ShortBreak)
+    set {
+      userDefaults.set(newValue, forKey: currentDateKey)
     }
+  }
 
-    func completeBreak() {
-        state = .Default
+  // Interval for rescheduling timers
+  var pausedTime: Int? {
+    get {
+      return userDefaults.object(forKey: "PausedTime") as? Int
     }
+    set {
+      if let value = newValue, value != 0 {
+        userDefaults.set(value, forKey: "PausedTime")
+      } else {
+        userDefaults.removeObject(forKey: "PausedTime")
+      }
+    }
+  }
 
-    private var currentDateKey: String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.stringFromDate(NSDate())
+  // Date representing fire date of scheduled notification
+  var fireDate: Date? {
+    get {
+      return userDefaults.object(forKey: "FireDate") as? Date
     }
+    set {
+      if let value = newValue {
+        userDefaults.set(value, forKey: "FireDate")
+      } else {
+        userDefaults.removeObject(forKey: "FireDate")
+      }
+    }
+  }
+
+  // Return paused if paused time present
+  var paused: Bool {
+    return pausedTime != nil
+  }
+
+  fileprivate var currentDateKey: String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    return dateFormatter.string(from: Date())
+  }
 
 }

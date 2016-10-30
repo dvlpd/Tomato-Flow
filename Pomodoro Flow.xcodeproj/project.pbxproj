@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29BFBDA1B289C93A36E9EF12 /* Pods_Pomodoro_Flow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 097A8E7D1D25EEE2B52FFEFE /* Pods_Pomodoro_Flow.framework */; };
 		373799491B49DB6E0025260A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373799481B49DB6E0025260A /* SettingsViewController.swift */; };
-		3737994B1B4ABA160025260A /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737994A1B4ABA160025260A /* SettingsManager.swift */; };
+		3737994B1B4ABA160025260A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737994A1B4ABA160025260A /* Settings.swift */; };
 		3737994D1B4B01250025260A /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737994C1B4B01250025260A /* PickerViewController.swift */; };
 		3737994F1B4C153B0025260A /* PickerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737994E1B4C153B0025260A /* PickerType.swift */; };
 		373BD3DB1C9B095A001C9790 /* UIColor+PomodoroFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373BD3DA1C9B095A001C9790 /* UIColor+PomodoroFlow.swift */; };
@@ -22,6 +23,7 @@
 		375850281B3B5B4A005628A0 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375850271B3B5B4A005628A0 /* RoundedButton.swift */; };
 		376795701B52DDDD007E6CBC /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3767956F1B52DDDD007E6CBC /* Scheduler.swift */; };
 		378192051B40682D0016375D /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378192041B40682D0016375D /* EmptyCell.swift */; };
+		37D94EE91CE6EBD60002D441 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D94EE81CE6EBD60002D441 /* TimerViewModel.swift */; };
 		37EFAC071C94C40F00D1DC76 /* Pomodoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EFAC061C94C40F00D1DC76 /* Pomodoro.swift */; };
 		37EFAC091C94C83200D1DC76 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EFAC081C94C83200D1DC76 /* State.swift */; };
 /* End PBXBuildFile section */
@@ -37,8 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		097A8E7D1D25EEE2B52FFEFE /* Pods_Pomodoro_Flow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pomodoro_Flow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		373799481B49DB6E0025260A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		3737994A1B4ABA160025260A /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		3737994A1B4ABA160025260A /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		3737994C1B4B01250025260A /* PickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		3737994E1B4C153B0025260A /* PickerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerType.swift; sourceTree = "<group>"; };
 		373BD3DA1C9B095A001C9790 /* UIColor+PomodoroFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+PomodoroFlow.swift"; sourceTree = "<group>"; };
@@ -56,8 +59,12 @@
 		375850271B3B5B4A005628A0 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		3767956F1B52DDDD007E6CBC /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Scheduler.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		378192041B40682D0016375D /* EmptyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
+		37D94EE81CE6EBD60002D441 /* TimerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
 		37EFAC061C94C40F00D1DC76 /* Pomodoro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pomodoro.swift; sourceTree = "<group>"; };
 		37EFAC081C94C83200D1DC76 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		5B43FE0B827FE99F5F87EAB3 /* Pods-Pomodoro Flow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pomodoro Flow.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pomodoro Flow/Pods-Pomodoro Flow.release.xcconfig"; sourceTree = "<group>"; };
+		8F62B83C60C20456A013C69B /* Pods_Pomodoro_FlowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pomodoro_FlowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1B894F05DDC9ACDD98D2AC2 /* Pods-Pomodoro Flow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pomodoro Flow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pomodoro Flow/Pods-Pomodoro Flow.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29BFBDA1B289C93A36E9EF12 /* Pods_Pomodoro_Flow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +92,8 @@
 				375347311B3AFF010089AB7F /* Pomodoro Flow */,
 				375347491B3AFF010089AB7F /* Pomodoro FlowTests */,
 				375347301B3AFF010089AB7F /* Products */,
+				758948839EC14946B44C6EED /* Pods */,
+				4016DC3CBE481E5495214F98 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -153,6 +163,7 @@
 				375347361B3AFF010089AB7F /* TimerViewController.swift */,
 				373799481B49DB6E0025260A /* SettingsViewController.swift */,
 				3737994C1B4B01250025260A /* PickerViewController.swift */,
+				37D94EE81CE6EBD60002D441 /* TimerViewModel.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -160,13 +171,31 @@
 		37FE4A8D1B5289D200280C97 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3737994A1B4ABA160025260A /* SettingsManager.swift */,
+				3737994A1B4ABA160025260A /* Settings.swift */,
 				3737994E1B4C153B0025260A /* PickerType.swift */,
 				3767956F1B52DDDD007E6CBC /* Scheduler.swift */,
 				37EFAC061C94C40F00D1DC76 /* Pomodoro.swift */,
 				37EFAC081C94C83200D1DC76 /* State.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		4016DC3CBE481E5495214F98 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				097A8E7D1D25EEE2B52FFEFE /* Pods_Pomodoro_Flow.framework */,
+				8F62B83C60C20456A013C69B /* Pods_Pomodoro_FlowTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		758948839EC14946B44C6EED /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B1B894F05DDC9ACDD98D2AC2 /* Pods-Pomodoro Flow.debug.xcconfig */,
+				5B43FE0B827FE99F5F87EAB3 /* Pods-Pomodoro Flow.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,9 +205,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 375347501B3AFF010089AB7F /* Build configuration list for PBXNativeTarget "Pomodoro Flow" */;
 			buildPhases = (
+				39AB0E80F44E8F4D12F1CB50 /* [CP] Check Pods Manifest.lock */,
 				3753472B1B3AFF010089AB7F /* Sources */,
 				3753472C1B3AFF010089AB7F /* Frameworks */,
 				3753472D1B3AFF010089AB7F /* Resources */,
+				E3122E6D8A52E8E226F44431 /* [CP] Embed Pods Frameworks */,
+				67909DA09B3EA8444E4A1678 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -221,6 +253,7 @@
 					3753472E1B3AFF010089AB7F = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = Z9SY9LHRWJ;
+						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.Wallet = {
 								enabled = 0;
@@ -229,6 +262,7 @@
 					};
 					375347451B3AFF010089AB7F = {
 						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 0810;
 						TestTargetID = 3753472E1B3AFF010089AB7F;
 					};
 				};
@@ -272,11 +306,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		39AB0E80F44E8F4D12F1CB50 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		67909DA09B3EA8444E4A1678 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Pomodoro Flow/Pods-Pomodoro Flow-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E3122E6D8A52E8E226F44431 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Pomodoro Flow/Pods-Pomodoro Flow-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3753472B1B3AFF010089AB7F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37D94EE91CE6EBD60002D441 /* TimerViewModel.swift in Sources */,
 				3737994F1B4C153B0025260A /* PickerType.swift in Sources */,
 				375850281B3B5B4A005628A0 /* RoundedButton.swift in Sources */,
 				373799491B49DB6E0025260A /* SettingsViewController.swift in Sources */,
@@ -284,7 +367,7 @@
 				3737994D1B4B01250025260A /* PickerViewController.swift in Sources */,
 				37EFAC071C94C40F00D1DC76 /* Pomodoro.swift in Sources */,
 				375347351B3AFF010089AB7F /* AppDelegate.swift in Sources */,
-				3737994B1B4ABA160025260A /* SettingsManager.swift in Sources */,
+				3737994B1B4ABA160025260A /* Settings.swift in Sources */,
 				375347371B3AFF010089AB7F /* TimerViewController.swift in Sources */,
 				37EFAC091C94C83200D1DC76 /* State.swift in Sources */,
 				375850261B3B50B0005628A0 /* EmptyRoundedButton.swift in Sources */,
@@ -415,29 +498,37 @@
 		};
 		375347511B3AFF010089AB7F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1B894F05DDC9ACDD98D2AC2 /* Pods-Pomodoro Flow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z9SY9LHRWJ;
 				INFOPLIST_FILE = "Pomodoro Flow/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.itsdn.PomodoroFlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		375347521B3AFF010089AB7F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B43FE0B827FE99F5F87EAB3 /* Pods-Pomodoro Flow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z9SY9LHRWJ;
 				INFOPLIST_FILE = "Pomodoro Flow/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.itsdn.PomodoroFlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -454,6 +545,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "me.itsdan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pomodoro Flow.app/Pomodoro Flow";
 			};
 			name = Debug;
@@ -466,6 +558,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "me.itsdan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pomodoro Flow.app/Pomodoro Flow";
 			};
 			name = Release;
