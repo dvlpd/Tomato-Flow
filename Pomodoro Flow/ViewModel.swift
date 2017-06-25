@@ -62,19 +62,20 @@ class ViewModel {
     // Pause button
     Observable.combineLatest(isRunning, isPaused) { isRunning, isPaused in
       return isPaused || !isRunning
-    }.bind(to: pauseButtonIsHidden).disposed(by: disposeBag)
+      }.bind(to: pauseButtonIsHidden).disposed(by: disposeBag)
 
     // Resume button
     Observable.combineLatest(isRunning, isPaused) { isRunning, isPaused in
       return !isPaused || !isRunning
-    }.bind(to: resumeButtonIsHidden).disposed(by: disposeBag)
+      }.bind(to: resumeButtonIsHidden).disposed(by: disposeBag)
+
+    // Timer label
+    secondsRemaining
+      .map { String(format: "%02d:%02d", $0 / 60, $0 % 60) }
+      .bind(to: timerLabel)
+      .disposed(by: disposeBag)
 
     secondsRemaining.subscribe(onNext: { value in
-      // Update label
-      let formattedString = String(format: "%02d:%02d", value / 60, value % 60)
-      print(formattedString)
-      self.timerLabel.onNext(formattedString)
-
       // Handle timeout
       guard value == 0 else { return }
 
@@ -86,15 +87,20 @@ class ViewModel {
       self.timer?.invalidate()
     }).disposed(by: disposeBag)
 
-    currentState.subscribe(onNext: { value in
-      // Update label color
-      switch value {
-      case .pomodoro:
-        self.timerLabelColor.onNext(UIColor.primaryColor)
-      case .shortBreak, .longBreak:
-        self.timerLabelColor.onNext(UIColor.breakColor)
+    // Timer label color
+    currentState
+      .map { value in
+        switch value {
+        case .pomodoro:
+          return UIColor.primaryColor
+        case .shortBreak, .longBreak:
+          return UIColor.breakColor
+        }
       }
+      .bind(to: timerLabelColor)
+      .disposed(by: disposeBag)
 
+    currentState.subscribe(onNext: { value in
       // Increment counter
       if value == .shortBreak || value == .longBreak {
         self.pomodoro.incrementPomodorosCount()
