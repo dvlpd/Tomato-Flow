@@ -87,9 +87,8 @@ class Pomodoro {
     }
   }
 
-  // Return paused if paused time present
-  var isRunning: Bool {
-    return pausedTime == nil
+  var isPaused: Bool {
+    return pausedTime != nil
   }
 
   func incrementPomodorosCount() {

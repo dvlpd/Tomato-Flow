@@ -28,16 +28,10 @@ class TimerViewController: UIViewController {
 
   @IBOutlet weak var collectionView: UICollectionView!
 
-  // Scheduler
-  fileprivate let pomodoro = Pomodoro.sharedInstance
-
-  // Time
-//  fileprivate var timer: Timer?
-//  fileprivate var currentTime: Double!
-
   // Configuration
   fileprivate let animationDuration = 0.3
   fileprivate let settings = Settings.sharedInstance
+  fileprivate let pomodoro = Pomodoro.sharedInstance
 
   fileprivate struct CollectionViewIdentifiers {
     static let emptyCell = "EmptyCell"
@@ -47,7 +41,7 @@ class TimerViewController: UIViewController {
   // MARK: - Initialization
   let viewModel = ViewModel()
 
-  fileprivate let disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
 
   deinit {
     NotificationCenter.default.removeObserver(self)
@@ -65,6 +59,27 @@ class TimerViewController: UIViewController {
   }
 
   fileprivate func bindViewModel() {
+    viewModel.pauseButtonIsHidden.subscribe(onNext: { print("Pause hidden \($0)") }).disposed(by: disposeBag)
+
+    // Button visibility
+    viewModel.startButtonIsHidden
+      .bind(to: startButton.rx.isHidden)
+      .disposed(by: disposeBag)
+
+    viewModel.pauseButtonIsHidden
+      .bind(to: pauseButton.rx.isHidden)
+      .disposed(by: disposeBag)
+
+    viewModel.resumeButtonIsHidden
+      .bind(to: unpauseButton.rx.isHidden)
+      .disposed(by: disposeBag)
+
+    viewModel.stopButtonIsHidden
+      .bind(to: stopButton.rx.isHidden)
+      .disposed(by: disposeBag)
+
+    // Timer label
+
     viewModel.timerLabel
       .bind(to: timerLabel.rx.text)
       .addDisposableTo(disposeBag)
@@ -74,6 +89,8 @@ class TimerViewController: UIViewController {
         self.timerLabel.textColor = $0
       })
       .addDisposableTo(disposeBag)
+
+    // Counter
 
     viewModel.pomodorosCount
       .asObservable()
@@ -101,22 +118,20 @@ class TimerViewController: UIViewController {
 
   @IBAction func start(_ sender: RoundedButton) {
     viewModel.start()
-    animateStarted()
+//    animateStarted()
   }
 
   @IBAction func stop(_ sender: RoundedButton) {
     viewModel.stop()
-    animateStopped()
+//    animateStopped()
   }
 
   @IBAction func pause(_ sender: EmptyRoundedButton) {
-    pause()
+    viewModel.pause()
   }
 
   @IBAction func unpause(_ sender: EmptyRoundedButton) {
     viewModel.resume()
-    togglePauseButton()
-    animateUnpaused()
   }
 
   func presentAlertFromNotification(_ notification: UILocalNotification) {

@@ -10,15 +10,23 @@ import UIKit
 import RxSwift
 
 class ViewModel {
-  // Output
+  // MARK: - Output
+
   var timerLabel = PublishSubject<String>()
   var timerLabelColor = PublishSubject<UIColor>()
-  var pomodorosCount = PublishSubject<Int>()
+  var pomodorosCount: BehaviorSubject<Int>
 
-  // Internal
-  private var secondsRemaining = BehaviorSubject<Int>(value: 0)
-  private var currentState = BehaviorSubject<State>(value: .pomodoro)
-  private var isRunning = PublishSubject<Bool>()
+  var startButtonIsHidden = BehaviorSubject(value: false)
+  var pauseButtonIsHidden = BehaviorSubject(value: false)
+  var resumeButtonIsHidden = BehaviorSubject(value: false)
+  var stopButtonIsHidden = BehaviorSubject(value: false)
+
+  // MARK: - Internal
+
+  private var secondsRemaining: BehaviorSubject<Int>
+  private var currentState: BehaviorSubject<State>
+  private var isRunning = BehaviorSubject(value: false)
+  private var isPaused = BehaviorSubject(value: false)
 
   private var timer: Timer?
 
@@ -29,14 +37,37 @@ class ViewModel {
   private let disposeBag = DisposeBag()
 
   init() {
-    // Configure internal state
     if let pausedTime = pomodoro.pausedTime {
-      secondsRemaining.onNext(pausedTime)
+      secondsRemaining = BehaviorSubject(value: pausedTime)
     } else {
-      secondsRemaining.onNext(settings.pomodoroLength)
+      secondsRemaining = BehaviorSubject(value: settings.pomodoroLength)
     }
-    pomodorosCount.onNext(pomodoro.pomodorosCount)
-    isRunning.onNext(pomodoro.isRunning)
+    currentState = BehaviorSubject(value: pomodoro.currentState)
+    pomodorosCount = BehaviorSubject(value: pomodoro.pomodorosCount)
+
+    isRunning = BehaviorSubject(value: false)
+    isPaused = BehaviorSubject(value: true)
+
+    // Start button
+    isRunning
+      .bind(to: startButtonIsHidden)
+      .disposed(by: disposeBag)
+
+    // Stop button
+    isRunning
+      .map { return !$0 }
+      .bind(to: stopButtonIsHidden)
+      .disposed(by: disposeBag)
+
+    // Pause button
+    Observable.combineLatest(isRunning, isPaused) { isRunning, isPaused in
+      return isPaused || !isRunning
+    }.bind(to: pauseButtonIsHidden).disposed(by: disposeBag)
+
+    // Resume button
+    Observable.combineLatest(isRunning, isPaused) { isRunning, isPaused in
+      return !isPaused || !isRunning
+    }.bind(to: resumeButtonIsHidden).disposed(by: disposeBag)
 
     secondsRemaining.subscribe(onNext: { value in
       // Update label
@@ -86,18 +117,28 @@ class ViewModel {
         self.timer = nil
       }
     }).disposed(by: disposeBag)
+
+    isPaused.subscribe(onNext: { value in
+      if value {
+        self.timer?.invalidate()
+        self.timer = nil
+      } else {
+        self.fireTimer()
+      }
+    }).disposed(by: disposeBag)
   }
 
   func start() {
     isRunning.onNext(true)
+    isPaused.onNext(false)
   }
 
   func pause() {
-    isRunning.onNext(false)
+    isPaused.onNext(true)
   }
 
   func resume() {
-    isRunning.onNext(true)
+    isPaused.onNext(false)
   }
 
   func stop() {
@@ -118,7 +159,6 @@ class ViewModel {
     switch state {
     case .pomodoro:
       self.secondsRemaining.onNext(self.settings.pomodoroLength)
-      self.secondsRemaining.onNext(10)
     case .shortBreak:
       self.secondsRemaining.onNext(self.settings.shortBreakLength)
     case .longBreak:
