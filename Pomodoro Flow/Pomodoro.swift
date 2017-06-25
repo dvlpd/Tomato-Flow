@@ -55,9 +55,45 @@ class Pomodoro {
     }
   }
 
+  var currentState: State {
+    get {
+      let stateString = userDefaults.string(forKey: "State") ?? "pomodoro"
+
+      switch stateString {
+      case "shortBreak":
+        return .shortBreak
+      case "longBreak":
+        return .longBreak
+      default:
+        return .pomodoro
+      }
+    }
+    set {
+      userDefaults.set(newValue.rawValue, forKey: "State")
+    }
+  }
+
+  var nextState: State {
+    // Return to pomodoro from break
+    if currentState == .shortBreak || currentState == .longBreak {
+      return .pomodoro
+    }
+
+    // Long break every 4 pomodoros
+    if pomodorosCount > 0 && pomodorosCount % 4 == 0 {
+      return .longBreak
+    } else {
+      return .shortBreak
+    }
+  }
+
   // Return paused if paused time present
-  var paused: Bool {
-    return pausedTime != nil
+  var isRunning: Bool {
+    return pausedTime == nil
+  }
+
+  func incrementPomodorosCount() {
+    pomodorosCount += 1
   }
 
   fileprivate var currentDateKey: String {

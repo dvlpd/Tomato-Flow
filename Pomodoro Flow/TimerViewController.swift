@@ -32,8 +32,8 @@ class TimerViewController: UIViewController {
   fileprivate let pomodoro = Pomodoro.sharedInstance
 
   // Time
-  fileprivate var timer: Timer?
-  fileprivate var currentTime: Double!
+//  fileprivate var timer: Timer?
+//  fileprivate var currentTime: Double!
 
   // Configuration
   fileprivate let animationDuration = 0.3
@@ -45,7 +45,7 @@ class TimerViewController: UIViewController {
   }
 
   // MARK: - Initialization
-  let viewModel = TimerViewModel()
+  let viewModel = ViewModel()
 
   fileprivate let disposeBag = DisposeBag()
 
@@ -76,11 +76,6 @@ class TimerViewController: UIViewController {
       .addDisposableTo(disposeBag)
 
     viewModel.pomodorosCount
-      .asObservable()
-      .subscribe(onNext: { _ in self.collectionView.reloadData() })
-      .addDisposableTo(disposeBag)
-
-    viewModel.targetPomodorosCount
       .asObservable()
       .subscribe(onNext: { _ in self.collectionView.reloadData() })
       .addDisposableTo(disposeBag)
@@ -119,7 +114,7 @@ class TimerViewController: UIViewController {
   }
 
   @IBAction func unpause(_ sender: EmptyRoundedButton) {
-    viewModel.unpause()
+    viewModel.resume()
     togglePauseButton()
     animateUnpaused()
   }
@@ -191,7 +186,7 @@ extension TimerViewController: UICollectionViewDataSource, UICollectionViewDeleg
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
     let index = rowsPerSection * indexPath.section + indexPath.row
-    let identifier = (index < viewModel.pomodorosCount.value) ?
+    let identifier = (index < pomodoro.pomodorosCount) ?
       CollectionViewIdentifiers.filledCell : CollectionViewIdentifiers.emptyCell
 
     return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
@@ -230,15 +225,15 @@ extension TimerViewController: UICollectionViewDataSource, UICollectionViewDeleg
   }
 
   fileprivate var numberOfRowsInLastSection: Int {
-    if viewModel.targetPomodorosCount.value % rowsPerSection == 0 {
+    if settings.targetPomodoros % rowsPerSection == 0 {
       return rowsPerSection
     } else {
-      return viewModel.targetPomodorosCount.value % rowsPerSection
+      return settings.targetPomodoros % rowsPerSection
     }
   }
 
   fileprivate var numberOfSections: Int {
-    return Int(ceil(Double(viewModel.targetPomodorosCount.value) / Double(rowsPerSection)))
+    return Int(ceil(Double(settings.targetPomodoros) / Double(rowsPerSection)))
   }
 
   fileprivate var lastSectionIndex: Int {

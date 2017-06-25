@@ -19,15 +19,15 @@ class Scheduler {
 
   static let sharedInstance = Scheduler()
 
-  fileprivate init() { }
+  private init() { }
 
-  fileprivate let userDefaults = UserDefaults.standard
-  fileprivate let settings = Settings.sharedInstance
-  fileprivate let pomodoro = Pomodoro.sharedInstance
+  private let userDefaults = UserDefaults.standard
+  private let settings = Settings.sharedInstance
+  private let pomodoro = Pomodoro.sharedInstance
 
   // MARK: - Helpers
 
-  fileprivate var firstScheduledNotification: UILocalNotification? {
+  private var firstScheduledNotification: UILocalNotification? {
     return UIApplication.shared.scheduledLocalNotifications?.first
   }
 
@@ -68,7 +68,9 @@ class Scheduler {
     print("Long break scheduled")
   }
 
-  fileprivate func scheduleNotification(_ interval: TimeInterval, title: String, body: String) {
+  // MARK: - Helpers
+
+  private func scheduleNotification(_ interval: TimeInterval, title: String, body: String) {
     let notification = UILocalNotification()
 
     notification.fireDate = Date(timeIntervalSinceNow: interval)
