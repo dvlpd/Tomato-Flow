@@ -66,7 +66,7 @@ class TimerViewController: UIViewController {
 
   fileprivate func bindViewModel() {
     viewModel.timerLabel
-      .bindTo(timerLabel.rx.text)
+      .bind(to: timerLabel.rx.text)
       .addDisposableTo(disposeBag)
 
     viewModel.timerLabelColor
